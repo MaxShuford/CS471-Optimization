@@ -31,7 +31,7 @@ Example execution:
   Functions to randomize population values and evaluate fitness using `Problem`.
 
 - `csv.h` / `csv.c`  
-  Writes output CSV (`experiment,fitness`).
+  Writes output CSV (`experiment,fitnesse, val_time_ms`).
 
 - `mt19937ar.h` / `mt19937ar.c`  
   Mersenne Twister RNG (MT19937).
