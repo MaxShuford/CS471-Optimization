@@ -1,0 +1,64 @@
+\chapter{Project 2 -\/ Blind \& RLS (C)}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Project 2 -\/ Blind \& RLS (C)@{Project 2 -\/ Blind \& RLS (C)}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{md__r_e_a_d_m_e_autotoc_md1}
+This project generates a {\bfseries{Population}} of random solution vectors and evaluates one selected benchmark objective function using Blind or Repeated Local Search. It outputs the {\bfseries{Fitness}} values (objective values) for each experiment into a CSV file for external analytics. \hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Program utilizes both Blind Search and Local Search algorithms}{Program utilizes both Blind Search and Local Search algorithms}}\label{md__r_e_a_d_m_e_autotoc_md2}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{CHANGELOG\+:}{CHANGELOG\+:}}\label{md__r_e_a_d_m_e_autotoc_md3}
+
+\begin{DoxyEnumerate}
+\item Refactored main.\+c problems.\+c, makefile, population.\+c, config.\+c, and run.\+py
+\item Created algorithm.\+c
+\item added option for single execution from CLI
+\item Added option for blind\+\_\+search OR local\+\_\+search
+\item Added range selection from input 
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{6. Updated README.\+md}{6. Updated README.\+md}}\label{md__r_e_a_d_m_e_autotoc_md4}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysection{\texorpdfstring{KNOWN ISSUES}{KNOWN ISSUES}}\label{md__r_e_a_d_m_e_autotoc_md5}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{1. improper error handling, python still wants to run after bad input.\+cfg values.}{1. improper error handling, python still wants to run after bad input.\+cfg values.}}\label{md__r_e_a_d_m_e_autotoc_md6}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysection{\texorpdfstring{Build Proceedure}{Build Proceedure}}\label{md__r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyItemize}
+\item In our local directory, build the program using ming32-\/make on WIN/\+DOS and make on UNIX/\+LINUX. Example execution\+: ming32-\/make
+
+python scripts/run.\+py --exe ./project2.exe --config input/input.\+cfg --runs 30 --out data/fitness\+\_\+master.\+csv
+\end{DoxyItemize}
+
+INDIVIDUAL EXECUTION\+: ./project2 input/input.\+cfg
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysection{\texorpdfstring{File Structure}{File Structure}}\label{md__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item {\ttfamily main.\+c} ~\newline
+ Entry point. Loads config, initializes RNG, creates {\ttfamily Problem}/{\ttfamily Population}/{\ttfamily Fitness}, writes CSV.
+\item {\ttfamily config.\+h} / {\ttfamily config.\+c} ~\newline
+ Reads all runtime parameters from a config file (key=value format).
+\item {\ttfamily problem.\+h} / {\ttfamily problem.\+c} ~\newline
+ Implements benchmark objective functions (1..10). ~\newline
+ Input\+: vector x ∈ R\texorpdfstring{$^\wedge$}{\string^}m ~\newline
+ Output\+: scalar f(x) (fitness)
+\item {\ttfamily algorithms.\+c/.h} Implements Blind Search, Local Search, and Repeated Local Search
+\item {\ttfamily population.\+h} / {\ttfamily population.\+c} ~\newline
+ Implements\+:
+\begin{DoxyItemize}
+\item {\ttfamily Population}\+: R\texorpdfstring{$^\wedge$}{\string^}(n×m) matrix
+\item {\ttfamily Fitness}\+: R\texorpdfstring{$^\wedge$}{\string^}n vector ~\newline
+ Functions to randomize population values and evaluate fitness using {\ttfamily Problem}.
+\end{DoxyItemize}
+\item {\ttfamily csv.\+h} / {\ttfamily csv.\+c} ~\newline
+ Writes output CSV ({\ttfamily experiment,fitness,}).
+\item {\ttfamily mt19937ar.\+h} / {\ttfamily mt19937ar.\+c} ~\newline
+ Mersenne Twister RNG (MT19937).
+\item {\ttfamily Makefile} ~\newline
+ Builds the project.
+\item {\ttfamily run\+\_\+bench.\+py} (optional helper script) Runs the program multiple times, appends results to a master CSV, and performs analytics in Python.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysection{\texorpdfstring{Config File (Required)}{Config File (Required)}}\label{md__r_e_a_d_m_e_autotoc_md11}
+Create a config file such as {\ttfamily input.\+cfg}\+:
+
+\`{}\`{}\`{}txt \hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysection{\texorpdfstring{Required\+:}{Required\+:}}\label{md__r_e_a_d_m_e_autotoc_md12}
+m=30 problem=4 output=fitness\+\_\+out.\+csv \hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysection{\texorpdfstring{lower must be less than upper}{lower must be less than upper}}\label{md__r_e_a_d_m_e_autotoc_md13}
+lower = \# upper = \#\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysection{\texorpdfstring{Optional\+:}{Optional\+:}}\label{md__r_e_a_d_m_e_autotoc_md14}
+n=30 seed=12345 
